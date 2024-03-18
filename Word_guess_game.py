@@ -1,53 +1,33 @@
 import random
+name=input("What is your name?")
+print("Good luck!",name)
+words=['rainbow','computer,science','programming',
+       'python','mathematics','player','condition',
+       'reverse','water','board','geeks']
+word = random.choice(words)
+print("Guess the word")
+guesses=""
+turns=12
 
-def choose_word():
-    words = ["apple", "banana", "cherry", "orange", "pear", "grape", "kiwi", "pineapple"]
-    return random.choice(words)
+while turns>0:
+  failed=0
+  for char in word:
+    if char in guesses:
+      print(char,end="")
+    else:
+      print("_")
+      failed += 1
+      if failed == 0:
+        print("You win!")
+        print("The word is ",word)
+        break
+      print()
+      guess = input("guess the character:")
+      guesses += guess
 
-def display_word(word, guessed_letters):
-    displayed_word = ""
-    for letter in word:
-        if letter in guessed_letters:
-            displayed_word += letter
-        else:
-            displayed_word += "_"
-    return displayed_word
-
-def main():
-    print("Welcome to the Word Guessing Game!")
-    name = input("Enter your name: ")
-    print(f"Hello, {name}! Let's start the game.")
-    
-    word_to_guess = choose_word()
-    guessed_letters = []
-    turns = 12
-    
-    while turns > 0:
-        print("\n" + display_word(word_to_guess, guessed_letters))
-        guess = input("Guess a letter: ").lower()
-        
-        if len(guess) != 1 or not guess.isalpha():
-            print("Please enter a single alphabet.")
-            continue
-        
-        if guess in guessed_letters:
-            print("You have already guessed that letter.")
-            continue
-        
-        guessed_letters.append(guess)
-        
-        if guess in word_to_guess:
-            print("Correct!")
-        else:
-            print("Incorrect!")
-            turns -= 1
-        
-        if "_" not in display_word(word_to_guess, guessed_letters):
-            print("\nCongratulations! You guessed the word:", word_to_guess)
-            break
-    
-    if turns == 0:
-        print("\nOops! You ran out of turns. The word was:", word_to_guess)
-
-if __name__ == "__main__":
-    main()
+      if guess not in word:
+        turns -= 1
+        print("Wrong")
+        print("You have",+turns,'more guesses')
+      if turns == 0:
+        print("You Loose")
